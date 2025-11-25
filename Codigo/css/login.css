@@ -1,0 +1,126 @@
+ body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #3c6eac, #8fb3e9);
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .card {
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(6px);
+            width: 360px;
+            padding: 40px 35px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+            animation: slideUp 0.7s ease;
+            text-align: center;
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(40px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .logo {
+            font-size: 40px;
+            font-weight: 700;
+            color: #3c6eac;
+            margin-bottom: 25px;
+        }
+
+        .input-group {
+            text-align: left;
+            margin-bottom: 20px;
+        }
+
+        label {
+            font-size: 14px;
+            font-weight: 600;
+            color: #444;
+        }
+
+        .input-box {
+            display: flex;
+            align-items: center;
+            background: #f2f5fa;
+            padding: 10px 12px;
+            border-radius: 10px;
+            border: 2px solid transparent;
+            transition: 0.3s;
+        }
+
+        .input-box:focus-within {
+            border-color: #3c6eac;
+            box-shadow: 0 0 8px rgba(60,110,172,0.5);
+        }
+
+        .input-box input {
+            width: 100%;
+            border: none;
+            outline: none;
+            font-size: 15px;
+            padding-left: 10px;
+            background: transparent;
+        }
+
+        .icon {
+            width: 20px;
+            height: 20px;
+            color: #3c6eac;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 14px;
+            border: none;
+            background: #3c6eac;
+            color: white;
+            border-radius: 10px;
+            font-size: 17px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn:hover {
+            background: #2e5591;
+        }
+
+        /* Efeito brilho */
+        .btn::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 80%;
+            height: 100%;
+            background: rgba(255,255,255,0.4);
+            transform: skewX(-20deg);
+            transition: 0.6s;
+        }
+
+        .btn:hover::before {
+            left: 120%;
+        }
+
+        .cadastro {
+            margin-top: 15px;
+            font-size: 14px;
+        }
+
+        .cadastro a {
+            text-decoration: none;
+            color: #3c6eac;
+            font-weight: 600;
+        }
+
+        .cadastro a:hover {
+            text-decoration: underline;
+        }
