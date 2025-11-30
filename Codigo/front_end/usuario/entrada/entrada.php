@@ -10,14 +10,92 @@ require_once "../../../back_end/controle/localizar_usuario.php";
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../../../css/entrada.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <title>Home</title>
+
+    <style>
+        #div_busca {
+            margin-top: 80px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+    </style>
 
 </head>
 
 <body>
+
+    <nav class="navbar navbar-expand-lg navbar-dark px-4 py-3"
+        style="border-radius:0 0 12px 12px; background-color: #3c6eac;">
+        <a class="navbar-brand" href="#" style="font-size:22px; font-weight:bold;">Registrador Filmes e Livros</a>
+
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menuNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="menuNav">
+            <ul class="navbar-nav ms-auto">
+
+                <li class="nav-item">
+                    <a class="nav-link" href="../perfil/perfil.php">Perfil</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="../listas/listas.php">Minhas Listas</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="../sugestao/livro_sugestao.php">Sugerir Livro</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="../sugestao/filme_sugestao.php">Sugerir Filme</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="../sugestao/minhas_sugestoes_livros.php">Minhas Sugestões de Livros</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="../sugestao/minhas_sugestoes_filmes.php">Minhas Sugestões de Filmes</a>
+                </li>
+
+                <!-- Botão Sair -->
+                <li class="nav-item">
+                    <a class="nav-link text-danger" href="#" data-bs-toggle="modal"
+                        data-bs-target="#confirmarSaidaModal">
+                        Sair
+                    </a>
+                </li>
+
+                <div class="modal fade" id="confirmarSaidaModal" tabindex="-1"
+                    aria-labelledby="confirmarSaidaModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="confirmarSaidaModalLabel">Confirmação de Logout</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Fechar"></button>
+                            </div>
+                            <div class="modal-body">
+                                Deseja realmente sair da sua conta?
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary"
+                                    data-bs-dismiss="modal">Cancelar</button>
+                                <form action="../../../back_end/perfil/logout.php" method="post">
+                                    <button type="submit" class="btn btn-danger">Sair</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </ul>
+        </div>
+    </nav>
     <div class="container">
         <h1>Bem Vindo!</h1>
         <h2>Aqui você pode registrar os livros e filmes que você quer ou já assistiu, tudo num lugar só!</h2>
+
 
         <div id="barra_comandos">
             <form action="../perfil/perfil.php" method="post">
@@ -32,8 +110,11 @@ require_once "../../../back_end/controle/localizar_usuario.php";
             <form action="../sugestao/filme_sugestao.php" method="post">
                 <input type="submit" value="Sugerir Filme">
             </form>
-            <form action="../sugestao/minhas_sugestoes.php" method="post">
-                <input type="submit" value="Minhas Sugestões">
+            <form action="../sugestao/minhas_sugestoes_livros.php" method="post">
+                <input type="submit" value="Minhas Sugestões de Livros">
+            </form>
+            <form action="../sugestao/minhas_sugestoes_filmes.php" method="post">
+                <input type="submit" value="Minhas Sugestões de Filmes">
             </form>
         </div>
     </div>

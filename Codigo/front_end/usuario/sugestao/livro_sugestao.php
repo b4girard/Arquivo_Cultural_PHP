@@ -28,7 +28,7 @@ include "../../../back_end/controle/conexao.php";
     <input type="text" name="autor"><br>
 
     <label for="descricao">Descrição</label>
-    <textarea name="descricao" rows="4" cols="50" maxlength="999" placeholder="Digite até 999 caracteres"></textarea><br>
+    <textarea name="descricao" rows="4" cols="50" maxlength="9999" placeholder="Digite até 9999 caracteres"></textarea><br>
 
     <label for="idioma">Idioma</label>
     <input type="text" name="idioma"><br>

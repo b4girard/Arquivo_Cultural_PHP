@@ -1,5 +1,6 @@
 <?php
 require_once "../../../back_end/controle/iniciar_sessao.php";
+require_once "../../../back_end/controle/localizar_usuario.php";
 include "../../../back_end/controle/conexao.php";
 ?>
 

@@ -1,12 +1,8 @@
 <?php 
 require_once "../../../back_end/controle/iniciar_sessao.php";
+require_once "../../../back_end/controle/localizar_usuario.php";
 include "../../../back_end/controle/conexao.php";
 
-// Verifica se o usuário está logado
-if (!isset($_SESSION['ID_usuario'])) {
-    die("Você precisa estar logado para ver suas sugestões.");
-}
-$ID_usuario = $_SESSION['ID_usuario'];
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -21,7 +17,7 @@ $ID_usuario = $_SESSION['ID_usuario'];
     <p>Aqui estão listadas todas as suas sugestões de livros enviadas.</p>
 
     <?php
-    // Busca apenas as sugestões do usuário logado
+
     $result = $conn->query("
         SELECT * 
         FROM sugestaolivro 
@@ -41,8 +37,8 @@ $ID_usuario = $_SESSION['ID_usuario'];
         echo "<td>{$row['Autor']}</td>";
         echo "<td>";
         if ($row['Capa']) {
-            // Caminho relativo correto para a página
-         echo '<img src="/registrador_filmes_e_livros_php/banco_de_dados/imagens_livro_sugestao/' . $row['Capa'] . '" width="100">';
+
+         echo '<img src="../../../banco_de_dados/' . $row['Capa'] . '" width="100">';
 
         } else {
             echo "Sem capa";
@@ -56,6 +52,4 @@ $ID_usuario = $_SESSION['ID_usuario'];
     ?>
 </body>
 </html>
-C:\xampp\htdocs\registrador_filmes_e_livros_php\codigo\banco_de_dados\imagens_livro_sugestao\692500403f8cb_dias_perfeitos.jpg
-C:\xampp\htdocs\registrador_filmes_e_livros_php\codigo\front_end\usuario\sugestao\minhas_sugestoes.php
-C:\xampp\htdocs\registrador_filmes_e_livros_php\codigo\back_end\sugestao\sugerir_livro.php
+

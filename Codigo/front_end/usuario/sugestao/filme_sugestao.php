@@ -27,7 +27,7 @@ include "../../../back_end/controle/conexao.php";
         <input type="text" name="diretor"></input><br>
 
         <label for="descricao">Descrição</label>
-        <textarea name="descricao" rows="4" cols="50" maxlength="999" placeholder="Digite até 999 caracteres"></textarea><br>
+        <textarea name="descricao" rows="4" cols="50" maxlength="9999" placeholder="Digite até 9999 caracteres"></textarea><br>
 
         <label for="idioma">Idioma Original</label>
         <input type="text" name="idioma"></input><br>
@@ -36,7 +36,7 @@ include "../../../back_end/controle/conexao.php";
         <input type="number" name="ano"></input><br>
 
         <label for="poster">Poster</label>
-        <input type="file" name="poster" accept="image/*">Capa do Livro</input><br>
+        <input type="file" name="poster" accept="image/*"><br>
 
         <input type="submit" value="Enviar Sugestão">
     </form>

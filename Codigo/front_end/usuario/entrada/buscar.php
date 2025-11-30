@@ -11,13 +11,11 @@ if (!$termo) {
 
 $likeTermo = "%$termo%";
 
-// Busca livros
-$stmtLivros = $conn->prepare("SELECT ID_livro, Titulo, Autor FROM livro WHERE Titulo LIKE ? OR Autor LIKE ?");
+$stmtLivros = $conn->prepare("SELECT ID_Livro, Titulo, Autor FROM livro WHERE Titulo LIKE ? OR Autor LIKE ?");
 $stmtLivros->bind_param("ss", $likeTermo, $likeTermo);
 $stmtLivros->execute();
 $resultLivros = $stmtLivros->get_result();
 
-// Busca filmes
 $stmtFilmes = $conn->prepare("SELECT ID_filme, Titulo, Diretor FROM filme WHERE Titulo LIKE ? OR Diretor LIKE ?");
 $stmtFilmes->bind_param("ss", $likeTermo, $likeTermo);
 $stmtFilmes->execute();
@@ -34,13 +32,18 @@ $resultFilmes = $stmtFilmes->get_result();
 </head>
 
 <body>
+    <a href="entrada.php">Home</a>
     <h2>Resultado para "<?= htmlspecialchars($termo) ?>"</h2>
 
     <h3>Livros</h3>
     <?php if ($resultLivros->num_rows > 0): ?>
         <ul>
             <?php while ($livro = $resultLivros->fetch_assoc()): ?>
-                <li><?= htmlspecialchars($livro['Titulo']) ?> — <?= htmlspecialchars($livro['Autor']) ?></li>
+                <li>
+                    <a href="../listas/itens.php?tipo=livro&id=<?= $livro['ID_Livro'] ?>">
+                        <?= htmlspecialchars($livro['Titulo']) ?>
+                    </a> — <?= htmlspecialchars($livro['Autor']) ?>
+                </li>
             <?php endwhile; ?>
         </ul>
     <?php else: ?>
@@ -51,7 +54,11 @@ $resultFilmes = $stmtFilmes->get_result();
     <?php if ($resultFilmes->num_rows > 0): ?>
         <ul>
             <?php while ($filme = $resultFilmes->fetch_assoc()): ?>
-                <li><?= htmlspecialchars($filme['Titulo']) ?> — <?= htmlspecialchars($filme['Diretor']) ?></li>
+                <li>
+                    <a href="../listas/itens.php?tipo=filme&id=<?= $filme['ID_filme'] ?>">
+                        <?= htmlspecialchars($filme['Titulo']) ?>
+                    </a> — <?= htmlspecialchars($filme['Diretor']) ?>
+                </li>
             <?php endwhile; ?>
         </ul>
     <?php else: ?>

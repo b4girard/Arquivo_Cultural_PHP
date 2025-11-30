@@ -27,7 +27,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if ($tipoUsuario === 'administrador') {
                 echo "<script type='text/javascript'>
                     alert('Login realizado com sucesso!');
-                    window.location.href = 'entrada_ADM.php';
+                    window.location.href = '../../front_end/adm/entrada_ADM.php';
                   </script>";
                 exit;
             }

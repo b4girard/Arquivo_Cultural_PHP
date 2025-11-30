@@ -21,12 +21,24 @@
         <input required type="email" name="e_mail"><br><br>
 
         <label for="senha">Senha</label>
-        <input required type="password" name="senha"><br><br>
+        <input required type="password" name="senha" id="senha"><br><br>
+         <button type="button" onclick="toggleSenha('senha')">👁️</button><br><br>
 
         <br><br><a href="login.php"> Já é cadastrado?</a>
 
 
         <input type="submit" value="Cadastrar-se">
+
+        <script>
+        function toggleSenha(id) {
+            const input = document.getElementById(id);
+            if (input.type === "password") {
+                input.type = "text";
+            } else {
+                input.type = "password";
+            }
+        }
+    </script>
 </body>
 
 </html>

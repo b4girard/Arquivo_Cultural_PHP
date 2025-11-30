@@ -1,124 +1,92 @@
 <?php
+require_once "../controle/iniciar_sessao.php";
 include "../controle/conexao.php";
 
-// Recebe os dados do formulário
-$imdb = $_POST['imdb'] ?? '';
-$titulo = $_POST['titulo'] ?? '';
-$diretor = $_POST['diretor'] ?? '';
-$descricao = $_POST['descricao'] ?? '';
-$idioma = $_POST['idioma'] ?? '';
-$ano = $_POST['ano'] ?? '';
-$sugestao_id = $_POST['sugestao_id'] ?? null;
+// Captura dados do POST
+$sugestao_id    = $_POST['sugestao_id'] ?? null;
+$titulo         = $_POST['titulo'] ?? '';
+$diretor        = $_POST['diretor'] ?? '';
+$descricao      = $_POST['descricao'] ?? '';
+$idioma         = $_POST['idioma'] ?? '';
+$ano_lancamento = $_POST['ano_lancamento'] ?? null;
+$imdb_id        = $_POST['imdb_id'] ?? '';
+$poster         = $_FILES['poster'] ?? null;
 
-// Validações obrigatórias
-if (empty($imdb) || empty($titulo) || empty($diretor)) {
-    die('IMDb, título e diretor são obrigatórios.');
-}
+if (!$sugestao_id) die("Sugestão inválida.");
+if (empty($titulo) || empty($diretor) || empty($imdb_id)) die("Título, diretor e IMDb ID são obrigatórios.");
+if (strlen($descricao) > 9999) die("A descrição não pode ter mais de 9999 caracteres.");
 
-if (strlen($descricao) > 999) {
-    die("A descrição não pode ter mais de 999 caracteres.");
-}
+// Busca a sugestão no banco
+$stmtSug = $conn->prepare("SELECT * FROM sugestaofilme WHERE ID_filme = ?");
+$stmtSug->bind_param("i", $sugestao_id);
+$stmtSug->execute();
+$resultSug = $stmtSug->get_result();
+$sugestao = $resultSug->fetch_assoc();
+$stmtSug->close();
 
-// =====================================
-// UPLOAD DO POSTER
-// =====================================
-$poster = null;
+if (!$sugestao) die("Sugestão não encontrada.");
 
-if (!empty($_FILES['poster']['name'])) {
+// Pasta destino para filmes validados
+$pasta_destino = "../../banco_de_dados/imagens_filme/";
+if (!is_dir($pasta_destino)) mkdir($pasta_destino, 0777, true);
 
-    // Se veio de sugestão, mover da pasta de sugestão
-    if ($sugestao_id) {
-        $query = $conn->prepare("SELECT Poster FROM sugestaofilme WHERE IMDb_ID = ?");
-        $query->bind_param("s", $imdb);
-        $query->execute();
-        $res = $query->get_result();
-        if ($res->num_rows > 0) {
-            $row = $res->fetch_assoc();
-            $caminho_antigo = $row['Poster'];
-            $pasta = "../../banco de dados/imagens_filme/";
-            if (!is_dir($pasta)) mkdir($pasta, 0777, true);
-            $nomeArquivo = basename($caminho_antigo);
-            $caminhoFinal = $pasta . $nomeArquivo;
+// Define o poster final
+$poster_final = null;
 
-            if (rename($caminho_antigo, $caminhoFinal)) {
-                $poster = $caminhoFinal;
-            }
-        }
+if ($poster && !empty($poster['name'])) {
+    // Poster enviado pelo ADM
+    $tipos_permitidos = ['image/jpeg', 'image/jpg', 'image/png'];
+    if (!in_array($poster['type'], $tipos_permitidos)) die("Tipo de arquivo não permitido. Use JPG ou PNG.");
+
+    $nomeArquivo = uniqid() . "_" . preg_replace("/[^a-zA-Z0-9_\.-]/", "_", basename($poster['name']));
+    $caminho_novo = $pasta_destino . $nomeArquivo;
+
+    if (move_uploaded_file($poster['tmp_name'], $caminho_novo)) {
+        $poster_final = "imagens_filme/" . $nomeArquivo;
+    } else {
+        die("Falha ao enviar o poster do filme.");
     }
 
-    // Se não veio da sugestão ou não conseguiu mover, faz upload normal
-    if (!$poster) {
-        $pasta = "../../banco de dados/imagens_filme/";
-        if (!is_dir($pasta)) mkdir($pasta, 0777, true);
-        $nomeArquivo = uniqid() . "_" . basename($_FILES['poster']['name']);
-        $caminhoFinal = $pasta . $nomeArquivo;
-        if (move_uploaded_file($_FILES['poster']['tmp_name'], $caminhoFinal)) {
-            $poster = $caminhoFinal;
-        }
+} else if (!empty($sugestao['Poster'])) {
+    // Copia o poster da sugestão
+    $caminho_antigo = "../../banco_de_dados/imagens_filme_sugestao/" . basename($sugestao['Poster']);
+    if (!file_exists($caminho_antigo)) die("Poster da sugestão não encontrado: $caminho_antigo");
+
+    $nomeArquivo = basename($sugestao['Poster']);
+    $caminho_novo = $pasta_destino . $nomeArquivo;
+
+    if (copy($caminho_antigo, $caminho_novo)) {
+        $poster_final = "imagens_filme/" . $nomeArquivo;
+    } else {
+        die("Falha ao copiar o poster da sugestão.");
     }
 }
 
-// =====================================
-// INSERIR NO BANCO
-// =====================================
-$sql = $conn->prepare("
-    INSERT INTO filme
-    (IMDb_ID, Titulo, Diretor, Descricao, Idioma_original, Ano_de_lancamento, Poster)
+// Inserir filme na tabela definitiva
+$stmtFilme = $conn->prepare("
+    INSERT INTO filme (IMDb_ID, Titulo, Diretor, Descricao, Idioma_original, Ano_de_lancamento, Poster)
     VALUES (?, ?, ?, ?, ?, ?, ?)
 ");
-$sql->bind_param("sssssis", $imdb, $titulo, $diretor, $descricao, $idioma, $ano, $poster);
+$stmtFilme->bind_param(
+    "sssssis",
+    $imdb_id, $titulo, $diretor, $descricao,
+    $idioma, $ano_lancamento, $poster_final
+);
 
-$success = false;
-if ($sql->execute()) {
-    $success = true;
-
-    // Apaga a sugestão da tabela, se existir
-    if ($sugestao_id) {
-        $del = $conn->prepare("DELETE FROM sugestaofilme WHERE IMDb_ID = ?");
-        $del->bind_param("s", $imdb);
-        $del->execute();
-        $del->close();
-    }
+if (!$stmtFilme->execute()) {
+    die("Erro ao cadastrar filme: " . $stmtFilme->error);
 }
+$stmtFilme->close();
 
-$sql->close();
+// Atualiza a sugestão para 'validado'
+$stmtStatus = $conn->prepare("UPDATE sugestaofilme SET Status = 'validado' WHERE ID_filme = ?");
+$stmtStatus->bind_param("i", $sugestao_id);
+$stmtStatus->execute();
+$stmtStatus->close();
+
 $conn->close();
+
+// Mensagem de sucesso
+echo "<p>Filme cadastrado com sucesso e sugestão validada!</p>";
+echo "<a href='../../front_end/adm/entrada_ADM.php'>Voltar</a>";
 ?>
-
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Cadastro de Filme</title>
-<!-- Bootstrap CSS -->
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-</head>
-<body>
-
-<!-- Modal -->
-<div class="modal fade" id="feedbackModal" tabindex="-1" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-header <?= $success ? 'bg-success text-white' : 'bg-danger text-white' ?>">
-        <h5 class="modal-title"><?= $success ? 'Sucesso!' : 'Erro!' ?></h5>
-      </div>
-      <div class="modal-body">
-        <?= $success ? 'Filme cadastrado com sucesso!' : 'Erro ao cadastrar filme.' ?>
-      </div>
-      <div class="modal-footer">
-        <a href="../../front_end/adm/cadastro/filme_cadastro.php" class="btn btn-primary">Voltar</a>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- Bootstrap JS -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-<script>
-var myModal = new bootstrap.Modal(document.getElementById('feedbackModal'));
-myModal.show();
-</script>
-
-</body>
-</html>

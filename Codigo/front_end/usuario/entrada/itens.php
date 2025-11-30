@@ -13,11 +13,11 @@ if ($id <= 0 || !in_array($tipo, ['livro', 'filme'])) {
     die("Item inválido.");
 }
 
-
+// Busca informações do item
 if ($tipo === 'livro') {
-    $stmt = $conn->prepare("SELECT Titulo, Autor, Descricao, Capa FROM livro WHERE ID_Livro = ?");
+    $stmt = $conn->prepare("SELECT Titulo, Autor, Descricao FROM livro WHERE ID_Livro = ?");
 } else {
-    $stmt = $conn->prepare("SELECT Titulo, Diretor, Descricao, Poster FROM filme WHERE ID_filme = ?");
+    $stmt = $conn->prepare("SELECT Titulo, Diretor, Descricao FROM filme WHERE ID_filme = ?");
 }
 
 $stmt->bind_param("i", $id);
@@ -28,6 +28,7 @@ $stmt->close();
 
 if (!$item) die("Item não encontrado.");
 
+// Busca avaliações
 if ($tipo === 'livro') {
     $stmt = $conn->prepare("
         SELECT avaliacao.Nota, avaliacao.Comentario, usuario.Nome
@@ -64,24 +65,17 @@ $stmt->close();
     p { margin: 5px 0; }
     .avaliacao { border: 1px solid #ccc; padding: 10px; margin: 10px 0; border-radius: 5px; }
     .avaliacao strong { color: #0066cc; }
-    .capa { max-width: 200px; margin: 10px 0; }
 </style>
 </head>
 <body>
 
-<a href="../entrada/entrada.php">Home</a>
+<a href="entrada.php">Home</a>
 <h1><?= htmlspecialchars($item['Titulo']) ?></h1>
 
 <?php if ($tipo === 'livro'): ?>
     <p><strong>Autor:</strong> <?= htmlspecialchars($item['Autor']) ?></p>
-    <?php if (!empty($item['Capa'])): ?>
-        <img src="../../../banco_de_dados/<?= htmlspecialchars($item['Capa']) ?>" alt="Capa do livro" class="capa">
-    <?php endif; ?>
 <?php else: ?>
     <p><strong>Diretor:</strong> <?= htmlspecialchars($item['Diretor']) ?></p>
-    <?php if (!empty($item['Poster'])): ?>
-        <img src="../../../banco_de_dados/<?= htmlspecialchars($item['Poster']) ?>" alt="Poster do filme" class="capa">
-    <?php endif; ?>
 <?php endif; ?>
 
 <p><strong>Descrição:</strong> <?= htmlspecialchars($item['Descricao'] ?: 'Sem descrição disponível.') ?></p>

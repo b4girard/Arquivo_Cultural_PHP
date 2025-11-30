@@ -30,11 +30,23 @@
                 <label for="senha">Senha</label>
                 <div class="input-box">
                     <i data-lucide="lock" class="icon"></i>
-                    <input type="password" name="senha" required>
+                    <input type="password" name="senha" id ="senha" required>
                 </div>
+                 <button type="button" onclick="toggleSenha('senha')">👁️</button><br><br>
             </div>
 
             <button class="btn" type="submit">Entrar</button>
+
+            <script>
+        function toggleSenha(id) {
+            const input = document.getElementById(id);
+            if (input.type === "password") {
+                input.type = "text";
+            } else {
+                input.type = "password";
+            }
+        }
+    </script>
         </form>
 
         <div class="cadastro">

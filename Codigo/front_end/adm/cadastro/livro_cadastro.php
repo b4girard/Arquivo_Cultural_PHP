@@ -2,7 +2,6 @@
 require_once "../../../back_end/controle/iniciar_sessao.php";
 include "../../../back_end/controle/conexao.php";
 
-// Buscar sugestões não validadas
 $query = "SELECT * FROM sugestaolivro WHERE Status = 'não validado'";
 $result = $conn->query($query);
 if (!$result) die("Erro ao buscar sugestões: " . $conn->error);
@@ -38,7 +37,7 @@ if (!$result) die("Erro ao buscar sugestões: " . $conn->error);
     <input type="text" name="autor" id="autor" maxlength="100" required><br>
 
     <label>Descrição:</label><br>
-    <textarea name="descricao" id="descricao" rows="4" cols="50" maxlength="999" placeholder="Digite até 999 caracteres" required></textarea><br>
+    <textarea name="descricao" id="descricao" rows="4" cols="50" maxlength="9999" placeholder="Digite até 9999 caracteres" required></textarea><br>
 
     <label>Idioma:</label><br>
     <input type="text" name="idioma" id="idioma" maxlength="50" required><br>
@@ -96,8 +95,8 @@ if (!$result) die("Erro ao buscar sugestões: " . $conn->error);
         <td><?= htmlspecialchars($livro['Editora']) ?></td>
         <td><?= htmlspecialchars($livro['N_Paginas']) ?></td>
         <td>
-            <?php if ($livro['Capa'] && file_exists("../../../banco_de_dados/imagens_livro_sugestao/{$livro['Capa']}")): ?>
-                <img src="../../../banco_de_dados/imagens_livro_sugestao/<?= htmlspecialchars($livro['Capa']) ?>" width="50">
+            <?php if ($livro['Capa'] && file_exists("../../../banco_de_dados/{$livro['Capa']}")): ?>
+                <img src="../../../banco_de_dados/<?= htmlspecialchars($livro['Capa']) ?>" width="50">
             <?php else: ?>
                 Sem capa
             <?php endif; ?>
@@ -120,6 +119,7 @@ document.querySelectorAll('input[name="selecionado"]').forEach(radio => {
         document.getElementById('idioma').value = this.dataset.idioma;
         document.getElementById('editora').value = this.dataset.editora;
         document.getElementById('n_pag').value = this.dataset.n_pag;
+        document.getElementById('capa').value = this.dataset.capa;
     });
 });
 </script>
