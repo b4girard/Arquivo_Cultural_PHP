@@ -10,6 +10,7 @@ include "../../../back_end/controle/conexao.php";
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Minhas Sugestões</title>
+     <link rel="stylesheet" href="../../../css/minhas_sugestoes_livros.css">
 </head>
 <body>
     <h1>Minhas Sugestões</h1>

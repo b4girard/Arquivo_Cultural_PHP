@@ -10,5 +10,4 @@ if (!isset($_SESSION['ID_usuario'])) {
 $ID_usuario = $_SESSION['ID_usuario'];
 $nomeUsuario = $_SESSION['nome'];
 
-
 ?>

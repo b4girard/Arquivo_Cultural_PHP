@@ -58,14 +58,7 @@ $stmt->close();
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title><?= htmlspecialchars($item['Titulo']) ?></title>
-<style>
-    body { font-family: Arial, sans-serif; padding: 20px; }
-    h1 { color: #333; }
-    p { margin: 5px 0; }
-    .avaliacao { border: 1px solid #ccc; padding: 10px; margin: 10px 0; border-radius: 5px; }
-    .avaliacao strong { color: #0066cc; }
-    .capa { max-width: 200px; margin: 10px 0; }
-</style>
+<link rel="stylesheet" href="../../../css/itens.css">
 </head>
 <body>
 

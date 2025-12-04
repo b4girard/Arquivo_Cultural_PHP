@@ -2,7 +2,7 @@
 require_once "../../../back_end/controle/iniciar_sessao.php";
 include "../../../back_end/controle/conexao.php";
 
-// Captura os parâmetros
+
 $id_item = intval($_GET['id_item'] ?? $_POST['id_item'] ?? 0);
 $tipo    = $_GET['tipo'] ?? $_POST['tipo'] ?? '';
 
@@ -10,7 +10,6 @@ if ($id_item <= 0 || !in_array($tipo, ['livro','filme'])) {
     die("Parâmetros inválidos.");
 }
 
-// Busca informações do item
 if ($tipo === 'livro') {
     $stmt = $conn->prepare("SELECT Titulo, Autor, Descricao, Capa FROM livro WHERE ID_Livro = ?");
 } else {
@@ -24,7 +23,6 @@ $stmt->close();
 
 if (!$item) die("Item não encontrado.");
 
-// Se o formulário foi enviado
 $mensagem = '';
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['avaliacao'])) {
     $avaliacao = intval($_POST['avaliacao']);
@@ -33,7 +31,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['avaliacao'])) {
     if ($avaliacao < 0 || $avaliacao > 5) {
         $mensagem = "A avaliação deve estar entre 0 e 5.";
     } else {
-        // Insere na tabela avaliacao
         $stmt = $conn->prepare("
             INSERT INTO avaliacao (ID_usuario, ID_livro, ID_filme, Nota, Comentario)
             VALUES (?, ?, ?, ?, ?)
@@ -61,39 +58,51 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['avaliacao'])) {
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Avaliar <?= htmlspecialchars($item['Titulo']) ?></title>
+
+<link rel="stylesheet" href="../../../css/avaliar.css">
+
 </head>
 <body>
-<h1><?= htmlspecialchars($item['Titulo']) ?></h1>
+<a href="../entrada/entrada.php">Home</a>
+<h1>Avaliar: <?= htmlspecialchars($item['Titulo']) ?></h1>
 
-<?php if ($tipo === 'livro'): ?>
-<p><strong>Autor:</strong> <?= htmlspecialchars($item['Autor']) ?></p>
-<?php else: ?>
-<p><strong>Diretor:</strong> <?= htmlspecialchars($item['Diretor']) ?></p>
-<?php endif; ?>
+<div class="container">
 
-<p><strong>Descrição:</strong> <?= htmlspecialchars($item['Descricao'] ?: 'Sem descrição disponível.') ?></p>
+    <div class="item-info">
+        <?php if ($tipo === 'livro'): ?>
+            <p><strong>Autor:</strong> <?= htmlspecialchars($item['Autor']) ?></p>
+        <?php else: ?>
+            <p><strong>Diretor:</strong> <?= htmlspecialchars($item['Diretor']) ?></p>
+        <?php endif; ?>
 
-<?php
-// Exibe capa/poster se existir
-$imagem = ($tipo === 'livro') ? $item['Capa'] : $item['Poster'];
-if (!empty($imagem)) {
-    echo '<p><img src="../../../banco_de_dados/' . htmlspecialchars($imagem) . '" alt="Capa/Poster" width="200"></p>';
-}
-?>
+        <p><strong>Descrição:</strong> <?= htmlspecialchars($item['Descricao'] ?: 'Sem descrição disponível.') ?></p>
 
-<?php if($mensagem) echo "<p><strong>$mensagem</strong></p>"; ?>
+        <?php
+        $imagem = ($tipo === 'livro') ? $item['Capa'] : $item['Poster'];
+        if (!empty($imagem)) {
+            echo '<img src="../../../banco_de_dados/' . htmlspecialchars($imagem) . '" class="capa">';
+        }
+        ?>
+    </div>
 
-<form method="post">
-    <input type="hidden" name="id_item" value="<?= $id_item ?>">
-    <input type="hidden" name="tipo" value="<?= $tipo ?>">
+    <?php if($mensagem): ?>
+        <div class="mensagem"><?= htmlspecialchars($mensagem) ?></div>
+    <?php endif; ?>
 
-    <label>Avaliação (0 a 5):</label>
-    <input type="number" name="avaliacao" min="0" max="5" required><br><br>
+    <form method="post">
+        <input type="hidden" name="id_item" value="<?= $id_item ?>">
+        <input type="hidden" name="tipo" value="<?= $tipo ?>">
 
-    <label>Comentário:</label><br>
-    <textarea name="comentario" rows="5" cols="50"></textarea><br><br>
+        <label>Avaliação (0 a 5):</label>
+        <input type="number" name="avaliacao" min="0" max="5" required>
 
-    <button type="submit">Enviar Avaliação</button>
-</form>
+        <label>Comentário:</label>
+        <textarea name="comentario" rows="5"></textarea>
+
+        <button type="submit">Enviar Avaliação</button>
+    </form>
+
+</div>
+
 </body>
 </html>

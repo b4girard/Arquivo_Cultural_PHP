@@ -18,6 +18,7 @@ $selecionadosFilmes = $_POST['filmes'] ?? [];
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Criar Lista</title>
+        <link rel="stylesheet" href="../../../css/criar_lista.css">
 </head>
 
 <body>

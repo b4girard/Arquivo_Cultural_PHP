@@ -6,7 +6,6 @@ if (!isset($_SESSION['ID_usuario'])) {
     die("Usuário não logado.");
 }
 
-// Captura os parâmetros
 $id_item    = intval($_POST['id_item'] ?? 0);
 $tipo       = $_POST['tipo'] ?? '';
 $avaliacao  = intval($_POST['avaliacao'] ?? -1);
@@ -20,11 +19,9 @@ if ($avaliacao < 0 || $avaliacao > 5) {
     die("Avaliação inválida.");
 }
 
-// Determina se é livro ou filme
 $id_livro = ($tipo === 'livro') ? $id_item : null;
 $id_filme = ($tipo === 'filme') ? $id_item : null;
 
-// Insere avaliação na tabela
 $stmt = $conn->prepare("
     INSERT INTO avaliacao (ID_usuario, ID_livro, ID_filme, Nota, Comentario)
     VALUES (?, ?, ?, ?, ?)
@@ -47,7 +44,6 @@ $conn->close();
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Avaliação</title>
 <style>
-/* Modal simples */
 .modal {
     display: block;
     position: fixed;
@@ -86,7 +82,6 @@ $conn->close();
 </div>
 
 <script>
-// Fecha o modal após 2 segundos e redireciona para o perfil
 setTimeout(function() {
     window.location.href = "../../front_end/usuario/perfil.php";
 }, 2000);

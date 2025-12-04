@@ -1,0 +1,90 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg, #a2c0ff, #f3f7ff);
+    margin: 0;
+    padding: 0;
+}
+
+h1 {
+    text-align: center;
+    margin-top: 40px;
+    font-size: 36px;
+    color: #8aaee0;
+    font-weight: 700;
+}
+
+.top-links {
+    text-align: center;
+    margin-top: 15px;
+}
+
+.top-links a {
+    background: #6385b5;
+    color: white;
+    padding: 10px 18px;
+    margin: 0 8px;
+    border-radius: 10px;
+    text-decoration: none;
+    transition: 0.3s;
+    font-weight: 600;
+}
+
+.top-links a:hover {
+    background: #8aaee0;
+    transform: scale(1.05);
+}
+
+
+.lista-container {
+    width: 75%;
+    max-width: 900px;
+    margin: 40px auto;
+}
+
+.lista-card {
+    background: white;
+    padding: 20px;
+    margin-bottom: 18px;
+    border-radius: 18px;
+    box-shadow: 0 5px 18px rgba(0, 0, 0, 0.08);
+    transition: 0.3s;
+    border-left: 6px solid #8aaee0;
+}
+
+.lista-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+}
+
+.lista-card strong {
+    font-size: 20px;
+    color: #5575a3;
+}
+
+.lista-desc {
+    margin: 6px 0 10px 0;
+    color: #555;
+}
+
+.lista-actions a {
+    margin-right: 10px;
+    font-weight: 600;
+    color: #8aaee0;
+    text-decoration: none;
+    transition: 0.2s;
+}
+
+.lista-actions a:hover {
+    text-decoration: underline;
+    color:#8aaee0;
+}
+
+
+.empty-msg {
+    text-align: center;
+    margin-top: 50px;
+    font-size: 20px;
+    color: #666;
+}

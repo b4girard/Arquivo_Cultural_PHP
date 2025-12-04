@@ -2,7 +2,6 @@
 require_once "../controle/iniciar_sessao.php";
 include "../controle/conexao.php";
 
-// Captura dados do POST
 $sugestao_id = $_POST['sugestao_id'] ?? null;
 $isbn        = $_POST['isbn'] ?? '';
 $titulo      = $_POST['titulo'] ?? '';
@@ -17,7 +16,6 @@ if (!$sugestao_id) die("Sugestão inválida.");
 if (empty($isbn) || empty($titulo) || empty($autor)) die("ISBN, título e autor são obrigatórios.");
 if (strlen($descricao) > 9999) die("A descrição não pode ter mais de 9999 caracteres.");
 
-// Busca a sugestão
 $stmtSug = $conn->prepare("SELECT * FROM sugestaolivro WHERE ID_Livro = ?");
 $stmtSug->bind_param("i", $sugestao_id);
 $stmtSug->execute();
@@ -27,15 +25,12 @@ $stmtSug->close();
 
 if (!$sugestao) die("Sugestão não encontrada.");
 
-// Pasta destino para livros validados
 $pasta_destino = "../../banco_de_dados/imagens_livro/";
 if (!is_dir($pasta_destino)) mkdir($pasta_destino, 0777, true);
 
-// Determina qual capa usar
 $capa_final = null;
 
 if ($capa && !empty($capa['name'])) {
-    // Nova capa enviada pelo ADM
     $tipos_permitidos = ['image/jpeg', 'image/jpg', 'image/png'];
     if (!in_array($capa['type'], $tipos_permitidos)) die("Tipo de arquivo não permitido. Use JPG ou PNG.");
 
@@ -49,7 +44,6 @@ if ($capa && !empty($capa['name'])) {
     }
 
 } else if (!empty($sugestao['Capa'])) {
-    // Copia a capa da sugestão
     $caminho_antigo = "../../banco_de_dados/imagens_livro_sugestao/" . basename($sugestao['Capa']);
     if (!file_exists($caminho_antigo)) die("Arquivo da capa da sugestão não encontrado: $caminho_antigo");
 
@@ -63,7 +57,6 @@ if ($capa && !empty($capa['name'])) {
     }
 }
 
-// Inserir livro na tabela livro
 $stmtLivro = $conn->prepare("
     INSERT INTO livro (ISBN, Titulo, Autor, Descricao, Idioma, Editora, N_Paginas, Capa)
     VALUES (?, ?, ?, ?, ?, ?, ?, ?)
@@ -79,7 +72,6 @@ if (!$stmtLivro->execute()) {
 }
 $stmtLivro->close();
 
-// Atualiza o status da sugestão
 $stmtStatus = $conn->prepare("UPDATE sugestaolivro SET Status = 'validado' WHERE ID_Livro = ?");
 $stmtStatus->bind_param("i", $sugestao_id);
 $stmtStatus->execute();
@@ -87,7 +79,6 @@ $stmtStatus->close();
 
 $conn->close();
 
-// Mensagem de sucesso
 echo "<p>Livro cadastrado com sucesso e sugestão validada!</p>";
 echo "<a href='../../front_end/adm/entrada_ADM.php'>Voltar</a>";
 ?>

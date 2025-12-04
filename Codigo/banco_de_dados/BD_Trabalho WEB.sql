@@ -118,7 +118,10 @@ CREATE TABLE avaliacao (
   FOREIGN KEY (ID_livro) REFERENCES livro(ID_livro),
   FOREIGN KEY (ID_filme) REFERENCES filme(ID_filme)
 );
+select * from usuario;
+select * from sugestaolivro;
+UPDATE usuario SET Tipo_usuario = "administrador" WHERE ID_usuario=2;
 
-
+delete from sugestaolivro where ID_Livro = 1;
 
 

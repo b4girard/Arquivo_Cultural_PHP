@@ -1,0 +1,115 @@
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+}
+
+body {
+    background: #f5f7fa;
+    color: #333;
+    padding: 40px;
+}
+
+h1, h2 {
+    text-align: center;
+    margin-bottom: 25px;
+    font-weight: 700;
+    color: #2c3e50;
+}
+
+a {
+    display: inline-block;
+    margin-bottom: 25px;
+    text-decoration: none;
+    color: #3498db;
+    font-weight: 600;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+form {
+    width: 60%;
+    margin: 0 auto;
+    background: white;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+form label {
+    font-weight: 600;
+    display: block;
+    margin-top: 12px;
+}
+
+form input, form textarea {
+    width: 100%;
+    margin-top: 6px;
+    padding: 12px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    background: #fdfdfd;
+    transition: 0.2s;
+}
+
+form input:focus, form textarea:focus {
+    border-color: #3498db;
+    outline: none;
+    box-shadow: 0 0 5px rgba(52,152,219,0.4);
+}
+
+form input[type="submit"] {
+    background: #3498db;
+    color: white;
+    font-weight: 700;
+    margin-top: 25px;
+    cursor: pointer;
+    border: none;
+    transition: 0.25s;
+}
+
+form input[type="submit"]:hover {
+    background: #217dbb;
+}
+
+
+table {
+    width: 100%;
+    margin-top: 35px;
+    border-collapse: collapse;
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+th {
+    background: #3498db;
+    color: white;
+    padding: 12px;
+    font-weight: 700;
+}
+
+td {
+    padding: 10px;
+    border-bottom: 1px solid #eee;
+}
+
+tr:hover {
+    background: #f0f8ff;
+}
+
+
+input[type="radio"] {
+    transform: scale(1.3);
+}
+
+
+img {
+    border-radius: 6px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+}

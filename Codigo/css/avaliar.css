@@ -1,0 +1,95 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg, #d9f2ff, #f3f7ff);
+    margin: 0;
+    padding: 30px;
+}
+
+h1 {
+    text-align: center;
+    font-size: 36px;
+    color: #405484;
+    margin-bottom: 20px;
+    font-weight: 700;
+}
+
+.container {
+    width: 90%;
+    max-width: 900px;
+    background: #ffffff;
+    margin: 30px auto;
+    padding: 35px;
+    border-radius: 22px;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.10);
+}
+
+.item-info p {
+    font-size: 18px;
+    margin: 12px 0;
+    color: #444;
+}
+
+.capa {
+    width: 230px;
+    border-radius: 12px;
+    display: block;
+    margin: 20px auto;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.20);
+}
+
+.mensagem {
+    background: #e8f2ff;
+    border-left: 6px solid #6d94d9;
+    padding: 12px 18px;
+    border-radius: 10px;
+    font-weight: 600;
+    color: #405484;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+label {
+    font-size: 17px;
+    color: #405984;
+    font-weight: 600;
+}
+
+input[type="number"],
+textarea {
+    width: 100%;
+    padding: 12px;
+    margin-top: 6px;
+    margin-bottom: 20px;
+    border-radius: 10px;
+    border: 1px solid #cdd7f5;
+    font-size: 15px;
+    background: #f8faff;
+    transition: 0.25s;
+}
+
+input[type="number"]:focus,
+textarea:focus {
+    outline: none;
+    border-color: #6d94d9;
+    box-shadow: 0 0 8px rgba(109,148,217,0.3);
+}
+
+button {
+    width: 100%;
+    background: #6d94d9;
+    border: none;
+    padding: 14px;
+    border-radius: 12px;
+    color: white;
+    font-size: 18px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.25s;
+}
+
+button:hover {
+    background: #4e70b8;
+    transform: scale(1.03);
+}

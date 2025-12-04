@@ -20,7 +20,6 @@ if (!$stmt->fetch()) {
 }
 $stmt->close();
 
-// Busca os itens da lista usando lista_midia
 $query = "
     SELECT lm.ID_livro AS ID, l.Titulo, l.Autor AS Extra, 'livro' AS Tipo
     FROM lista_midia lm
@@ -50,6 +49,7 @@ $result = $stmt->get_result();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?= htmlspecialchars($nomeLista) ?></title>
+      <link rel="stylesheet" href="../../../css/ver_lista.css">
 </head>
 
 <body>

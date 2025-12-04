@@ -8,77 +8,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>Home - Administrador</title>
-
-
+    <link rel="stylesheet" href="../css/entrada_ADM.css">
+       
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
-    <style>
-        body {
-            background-color: #fff;
-        }
-
-        h1 {
-            color: rgb(118, 152, 197);
-            margin-top: 20px;
-        }
-
-        h2 {
-            color: #000;
-            margin-top: 20px;
-        }
-
-        a {
-            display: inline-block;
-            margin: 10px 0;
-            font-size: 18px;
-            color: #007bff;
-            text-decoration: none;
-        }
-
-        /* === Ajuste do tamanho das imagens do carousel === */
-        .carousel-item img {
-            height: 500px;
-            /* altura desejada */
-            object-fit: cover;
-            /* preenche o espaço sem distorcer */
-        }
-
-
-        .carousel {
-            max-width: 900px;
-            margin: 40px auto;
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-        }
-
-
-        #div_busca {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            width: 300px;
-            height: 45px;
-        }
-
-        #txt_busca {
-            flex: 1;
-            padding: 10px 12px;
-            font-size: 16px;
-            border-radius: 6px;
-            border: 1px solid #aaa;
-            outline: none;
-        }
-
-        #btn_Busca {
-            width: 40px;
-            height: 40px;
-            cursor: pointer;
-        }
-    </style>
 </head>
 
 <body>

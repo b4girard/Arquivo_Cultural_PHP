@@ -13,11 +13,7 @@ if (!$result) die("Erro ao buscar sugestões: " . $conn->error);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Validar Sugestões de Livros</title>
-    <style>
-        table { border-collapse: collapse; width: 100%; }
-        th, td { border: 1px solid #000; padding: 5px; }
-        img { display: block; }
-    </style>
+    <link rel="stylesheet" href="../css/livro_cadastro.css">
 </head>
 <body>
 
