@@ -3,18 +3,21 @@ require_once "../controle/iniciar_sessao.php";
 include "../controle/conexao.php";
 
 $sugestao_id = $_POST['sugestao_id'] ?? null;
-$isbn        = $_POST['isbn'] ?? '';
-$titulo      = $_POST['titulo'] ?? '';
-$autor       = $_POST['autor'] ?? '';
-$descricao   = $_POST['descricao'] ?? '';
-$idioma      = $_POST['idioma'] ?? '';
-$editora     = $_POST['editora'] ?? '';
-$n_pag       = $_POST['n_pag'] ?? null;
-$capa        = $_FILES['capa'] ?? null;
+$isbn = $_POST['isbn'] ?? '';
+$titulo = $_POST['titulo'] ?? '';
+$autor = $_POST['autor'] ?? '';
+$descricao = $_POST['descricao'] ?? '';
+$idioma = $_POST['idioma'] ?? '';
+$editora = $_POST['editora'] ?? '';
+$n_pag = $_POST['n_pag'] ?? null;
+$capa = $_FILES['capa'] ?? null;
 
-if (!$sugestao_id) die("Sugestão inválida.");
-if (empty($isbn) || empty($titulo) || empty($autor)) die("ISBN, título e autor são obrigatórios.");
-if (strlen($descricao) > 9999) die("A descrição não pode ter mais de 9999 caracteres.");
+if (!$sugestao_id)
+    die("Sugestão inválida.");
+if (empty($isbn) || empty($titulo) || empty($autor))
+    die("ISBN, título e autor são obrigatórios.");
+if (strlen($descricao) > 9999)
+    die("A descrição não pode ter mais de 9999 caracteres.");
 
 $stmtSug = $conn->prepare("SELECT * FROM sugestaolivro WHERE ID_Livro = ?");
 $stmtSug->bind_param("i", $sugestao_id);
@@ -23,16 +26,19 @@ $resultSug = $stmtSug->get_result();
 $sugestao = $resultSug->fetch_assoc();
 $stmtSug->close();
 
-if (!$sugestao) die("Sugestão não encontrada.");
+if (!$sugestao)
+    die("Sugestão não encontrada.");
 
 $pasta_destino = "../../banco_de_dados/imagens_livro/";
-if (!is_dir($pasta_destino)) mkdir($pasta_destino, 0777, true);
+if (!is_dir($pasta_destino))
+    mkdir($pasta_destino, 0777, true);
 
 $capa_final = null;
 
 if ($capa && !empty($capa['name'])) {
     $tipos_permitidos = ['image/jpeg', 'image/jpg', 'image/png'];
-    if (!in_array($capa['type'], $tipos_permitidos)) die("Tipo de arquivo não permitido. Use JPG ou PNG.");
+    if (!in_array($capa['type'], $tipos_permitidos))
+        die("Tipo de arquivo não permitido. Use JPG ou PNG.");
 
     $nomeArquivo = uniqid() . "_" . preg_replace("/[^a-zA-Z0-9_\.-]/", "_", basename($capa['name']));
     $caminho_novo = $pasta_destino . $nomeArquivo;
@@ -45,7 +51,8 @@ if ($capa && !empty($capa['name'])) {
 
 } else if (!empty($sugestao['Capa'])) {
     $caminho_antigo = "../../banco_de_dados/imagens_livro_sugestao/" . basename($sugestao['Capa']);
-    if (!file_exists($caminho_antigo)) die("Arquivo da capa da sugestão não encontrado: $caminho_antigo");
+    if (!file_exists($caminho_antigo))
+        die("Arquivo da capa da sugestão não encontrado: $caminho_antigo");
 
     $nomeArquivo = basename($sugestao['Capa']);
     $caminho_novo = $pasta_destino . $nomeArquivo;
@@ -63,8 +70,14 @@ $stmtLivro = $conn->prepare("
 ");
 $stmtLivro->bind_param(
     "ssssssis",
-    $isbn, $titulo, $autor, $descricao,
-    $idioma, $editora, $n_pag, $capa_final
+    $isbn,
+    $titulo,
+    $autor,
+    $descricao,
+    $idioma,
+    $editora,
+    $n_pag,
+    $capa_final
 );
 
 if (!$stmtLivro->execute()) {
@@ -78,7 +91,29 @@ $stmtStatus->execute();
 $stmtStatus->close();
 
 $conn->close();
-
-echo "<p>Livro cadastrado com sucesso e sugestão validada!</p>";
-echo "<a href='../../front_end/adm/entrada_ADM.php'>Voltar</a>";
 ?>
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../../css/modal_cadastro_itens.css">
+    <title>Sucesso</title>
+</head>
+<body>
+    <div class="modal-overlay" id="modalSucesso">
+    <div class="modal">
+        <h2>Sucesso!</h2>
+        <p>Livro cadastrado com sucesso.</p>
+
+        <button onclick="window.location.href='../../front_end/adm/entrada_ADM.php'">
+            Voltar
+        </button>
+    </div>
+</div>
+
+<script>
+    document.getElementById('modalSucesso').style.display = 'flex';
+</script>
+</body>
+</html>

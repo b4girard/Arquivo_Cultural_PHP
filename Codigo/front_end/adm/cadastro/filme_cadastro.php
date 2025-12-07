@@ -13,14 +13,13 @@ if (!$result) die("Erro ao buscar sugestões: " . $conn->error);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Validar Sugestões de Filmes</title>
-    <link rel="stylesheet" href="../css/filme_cadastro.css">
+    <link rel="stylesheet" href="../../../css/filme_cadastro.css">
   
 </head>
 <body>
 
 <h1>Validar Sugestões de Filmes</h1>
 <a href="../entrada_ADM.php">Home</a>
-
 <form method="POST" action="../../../back_end/cadastro/cadastro_filme.php" enctype="multipart/form-data" id="formCadastro">
     <input type="hidden" name="sugestao_id" id="sugestao_id">
 

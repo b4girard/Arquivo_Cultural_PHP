@@ -1,149 +1,108 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
 
 body {
     font-family: 'Poppins', sans-serif;
-    background: linear-gradient(135deg, #e5d9ff, #f3f7ff);
-    padding: 0;
+    background: linear-gradient(135deg, #a2c0ff, #f3f7ff);
     margin: 0;
+    padding: 0;
+    color: #333;
 }
 
-h2 {
+h2, h3 {
     text-align: center;
-    margin-top: 30px;
-    font-size: 32px;
-    color: #5c4084;
+    color: #4f7ac7;
     font-weight: 700;
+    margin-bottom: 20px;
 }
-
-.container {
-    width: 70%;
-    max-width: 900px;
-    margin: 40px auto;
-    background: #ffffff;
-    padding: 35px;
-    border-radius: 20px;
-    box-shadow: 0 6px 25px rgba(0, 0, 0, 0.08);
-}
-
-
 
 form {
-    margin: 0 auto;
-    width: 70%;
-    max-width: 650px;
+    width: 90%;
+    max-width: 700px;
+    margin: 0 auto 30px auto;
+    background: white;
+    padding: 25px 30px;
+    border-radius: 15px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+    transition: all 0.3s ease;
 }
 
-form label {
-    font-size: 15px;
-    font-weight: 600;
-    color: #4a4a4a;
+form:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 30px rgba(0,0,0,0.12);
 }
 
-form input[type="text"] {
+label {
+    font-weight: 500;
+    margin-bottom: 5px;
+    display: block;
+    color: #3f5a8c;
+}
+
+input[type="text"], textarea {
     width: 100%;
-    padding: 12px;
-    margin-top: 6px;
+    padding: 10px 12px;
+    margin-bottom: 15px;
     border-radius: 10px;
     border: 1px solid #ccc;
-    background: #fafafa;
-    font-size: 15px;
-}
-
-form button {
-    background: #8c65c7;
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 10px;
-    margin-top: 10px;
-    cursor: pointer;
-    transition: 0.3s;
-    font-weight: 600;
-}
-
-form button:hover {
-    background: #6a4ea8;
-    transform: scale(1.02);
-}
-
-
-
-#nome_lista,
-#descricao {
-    width: 100%;
-}
-
-#descricao {
-    resize: none;
-}
-
-
-h3 {
-    margin-top: 25px;
-    color: #5c4084;
-    border-left: 6px solid #8c65c7;
-    padding-left: 8px;
-    font-size: 22px;
-}
-
-
-.item-card {
-    background: #ffffff;
-    border: 1px solid #e3dff5;
-    padding: 15px;
-    margin-bottom: 12px;
-    border-radius: 15px;
+    font-size: 1rem;
     transition: 0.2s;
-    display: flex;
-    align-items: center;
-    gap: 10px;
 }
 
-.item-card:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 6px 15px rgba(140, 101, 199, 0.15);
-    border-color: #c4b3f3;
+input[type="text"]:focus,
+textarea:focus {
+    border-color: #8aaee0;
+    box-shadow: 0 0 6px rgba(138,174,224,0.5);
+    outline: none;
 }
 
-.item-card label {
-    font-weight: 500;
-    font-size: 15px;
-    cursor: pointer;
-}
-
-
-.item-card input[type="checkbox"] {
-    transform: scale(1.3);
-    accent-color: #8c65c7;
-}
-
-
-
-button[type="submit"],
-a.botao-cancelar {
-    display: inline-block;
-    background: #8c65c7;
-    color: white !important;
-    padding: 12px 20px;
-    border-radius: 12px;
-    font-size: 17px;
+button[type="submit"], a.cancel-btn {
+    padding: 10px 20px;
     font-weight: 600;
-    text-decoration: none;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
     transition: 0.3s;
-    margin-top: 20px;
+    margin-top: 10px;
 }
 
-button[type="submit"]:hover,
-a.botao-cancelar:hover {
-    background: #6a4ea8;
-    transform: scale(1.03);
+button[type="submit"] {
+    background-color: #6385b5;
+    color: white;
 }
 
-a.botao-cancelar {
-    margin-left: 15px;
-    background: #aaa;
+button[type="submit"]:hover {
+    background-color: #8aaee0;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(0,0,0,0.15);
 }
 
-a.botao-cancelar:hover {
-    background: #888;
+a.cancel-btn {
+    background-color: #ccc;
+    color: #333;
+    text-decoration: none;
+    margin-left: 10px;
+}
+
+a.cancel-btn:hover {
+    background-color: #bbb;
+    transform: translateY(-2px);
+}
+
+div > label input[type="checkbox"] {
+    margin-right: 8px;
+}
+
+p {
+    color: #666;
+    font-style: italic;
+}
+
+@media (max-width: 768px) {
+    form {
+        padding: 20px;
+    }
+
+    h2, h3 {
+        font-size: 1.5rem;
+    }
 }

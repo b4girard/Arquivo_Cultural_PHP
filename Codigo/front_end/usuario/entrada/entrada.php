@@ -20,7 +20,7 @@ require_once "../../../back_end/controle/localizar_usuario.php";
 
 
     <nav class="navbar navbar-expand-lg navbar-dark px-4 py-3">
-        <a class="navbar-brand" href="#" style="font-size:22px; font-weight:bold;">Registrador Filmes e Livros</a>
+        <a class="navbar-brand" href="#" style="font-size:22px; font-weight:bold;">Arquivo Cultural</a>
 
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menuNav">
             <span class="navbar-toggler-icon"></span>

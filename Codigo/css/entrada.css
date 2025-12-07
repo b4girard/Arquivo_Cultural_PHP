@@ -92,7 +92,6 @@ body {
     box-shadow: 0 4px 10px rgba(0,0,0,0.20);
 }
 
-/* ===== BUSCA ===== */
 #div_busca {
     display: flex;
     justify-content: center;
@@ -116,7 +115,6 @@ body {
     cursor: pointer;
 }
 
-/* ===== CARROSSEL ===== */
 .carrossel {
     width: 100%;
     overflow: hidden;

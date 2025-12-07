@@ -20,10 +20,26 @@ $ID_usuario = $_SESSION['ID_usuario'];
 
 <body>
 
-<a href="perfil.php">← Voltar ao perfil</a>
+    <a class="voltar" href="perfil.php">← Voltar ao perfil</a>
 
     <form action="../../../back_end/perfil/editar_se.php" method="POST">
         <h2 class="titulo-form">Editar perfil</h2>
+        <?php
+        $stmt = $conn->prepare("SELECT Nome, Usuario, E_mail FROM usuario WHERE ID_usuario = ?");
+        $stmt->bind_param("i", $ID_usuario);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        if ($result->num_rows > 0) {
+            $row = $result->fetch_assoc();
+
+            echo "<strong>Nome:</strong> " . htmlspecialchars($row['Nome']) . "<br>";
+            echo "<strong>Usuário:</strong> " . htmlspecialchars($row['Usuario']) . "<br>";
+            echo "<strong>Email:</strong> " . htmlspecialchars($row['E_mail']) . "<br>";
+        } else {
+            echo "Usuário não encontrado.";
+        }
+        ?>
 
         <label>Senha atual <span style="color:red">*</span></label>
         <input required type="password" id="senha_atual" name="senha_atual">
@@ -59,22 +75,7 @@ $ID_usuario = $_SESSION['ID_usuario'];
 
     <br><br>
 
-    <?php
-    $stmt = $conn->prepare("SELECT Nome, Usuario, E_mail FROM usuario WHERE ID_usuario = ?");
-    $stmt->bind_param("i", $ID_usuario);
-    $stmt->execute();
-    $result = $stmt->get_result();
 
-    if ($result->num_rows > 0) {
-        $row = $result->fetch_assoc();
-
-        echo "Nome: " . htmlspecialchars($row['Nome']) . "<br>";
-        echo "Usuário: " . htmlspecialchars($row['Usuario']) . "<br>";
-        echo "Email: " . htmlspecialchars($row['E_mail']) . "<br>";
-    } else {
-        echo "Usuário não encontrado.";
-    }
-    ?>
 </body>
 
 </html>

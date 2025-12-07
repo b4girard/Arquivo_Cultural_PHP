@@ -2,18 +2,21 @@
 require_once "../controle/iniciar_sessao.php";
 include "../controle/conexao.php";
 
-$sugestao_id    = $_POST['sugestao_id'] ?? null;
-$titulo         = $_POST['titulo'] ?? '';
-$diretor        = $_POST['diretor'] ?? '';
-$descricao      = $_POST['descricao'] ?? '';
-$idioma         = $_POST['idioma'] ?? '';
+$sugestao_id = $_POST['sugestao_id'] ?? null;
+$titulo = $_POST['titulo'] ?? '';
+$diretor = $_POST['diretor'] ?? '';
+$descricao = $_POST['descricao'] ?? '';
+$idioma = $_POST['idioma'] ?? '';
 $ano_lancamento = $_POST['ano_lancamento'] ?? null;
-$imdb_id        = $_POST['imdb_id'] ?? '';
-$poster         = $_FILES['poster'] ?? null;
+$imdb_id = $_POST['imdb_id'] ?? '';
+$poster = $_FILES['poster'] ?? null;
 
-if (!$sugestao_id) die("Sugestão inválida.");
-if (empty($titulo) || empty($diretor) || empty($imdb_id)) die("Título, diretor e IMDb ID são obrigatórios.");
-if (strlen($descricao) > 9999) die("A descrição não pode ter mais de 9999 caracteres.");
+if (!$sugestao_id)
+    die("Sugestão inválida.");
+if (empty($titulo) || empty($diretor) || empty($imdb_id))
+    die("Título, diretor e IMDb ID são obrigatórios.");
+if (strlen($descricao) > 9999)
+    die("A descrição não pode ter mais de 9999 caracteres.");
 
 $stmtSug = $conn->prepare("SELECT * FROM sugestaofilme WHERE ID_filme = ?");
 $stmtSug->bind_param("i", $sugestao_id);
@@ -22,17 +25,20 @@ $resultSug = $stmtSug->get_result();
 $sugestao = $resultSug->fetch_assoc();
 $stmtSug->close();
 
-if (!$sugestao) die("Sugestão não encontrada.");
+if (!$sugestao)
+    die("Sugestão não encontrada.");
 
 $pasta_destino = "../../banco_de_dados/imagens_filme/";
-if (!is_dir($pasta_destino)) mkdir($pasta_destino, 0777, true);
+if (!is_dir($pasta_destino))
+    mkdir($pasta_destino, 0777, true);
 
 
 $poster_final = null;
 
 if ($poster && !empty($poster['name'])) {
     $tipos_permitidos = ['image/jpeg', 'image/jpg', 'image/png'];
-    if (!in_array($poster['type'], $tipos_permitidos)) die("Tipo de arquivo não permitido. Use JPG ou PNG.");
+    if (!in_array($poster['type'], $tipos_permitidos))
+        die("Tipo de arquivo não permitido. Use JPG ou PNG.");
 
     $nomeArquivo = uniqid() . "_" . preg_replace("/[^a-zA-Z0-9_\.-]/", "_", basename($poster['name']));
     $caminho_novo = $pasta_destino . $nomeArquivo;
@@ -45,7 +51,8 @@ if ($poster && !empty($poster['name'])) {
 
 } else if (!empty($sugestao['Poster'])) {
     $caminho_antigo = "../../banco_de_dados/imagens_filme_sugestao/" . basename($sugestao['Poster']);
-    if (!file_exists($caminho_antigo)) die("Poster da sugestão não encontrado: $caminho_antigo");
+    if (!file_exists($caminho_antigo))
+        die("Poster da sugestão não encontrado: $caminho_antigo");
 
     $nomeArquivo = basename($sugestao['Poster']);
     $caminho_novo = $pasta_destino . $nomeArquivo;
@@ -63,8 +70,13 @@ $stmtFilme = $conn->prepare("
 ");
 $stmtFilme->bind_param(
     "sssssis",
-    $imdb_id, $titulo, $diretor, $descricao,
-    $idioma, $ano_lancamento, $poster_final
+    $imdb_id,
+    $titulo,
+    $diretor,
+    $descricao,
+    $idioma,
+    $ano_lancamento,
+    $poster_final
 );
 
 if (!$stmtFilme->execute()) {
@@ -78,7 +90,29 @@ $stmtStatus->execute();
 $stmtStatus->close();
 
 $conn->close();
-
-echo "<p>Filme cadastrado com sucesso e sugestão validada!</p>";
-echo "<a href='../../front_end/adm/entrada_ADM.php'>Voltar</a>";
 ?>
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../../css/modal_cadastro_itens.css">
+    <title>Sucesso</title>
+</head>
+<body>
+    <div class="modal-overlay" id="modalSucesso">
+    <div class="modal">
+        <h2>Sucesso!</h2>
+        <p>Filme cadastrado com sucesso.</p>
+
+        <button onclick="window.location.href='../../front_end/adm/entrada_ADM.php'">
+            Voltar
+        </button>
+    </div>
+</div>
+
+<script>
+    document.getElementById('modalSucesso').style.display = 'flex';
+</script>
+</body>
+</html>

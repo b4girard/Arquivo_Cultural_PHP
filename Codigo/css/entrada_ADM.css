@@ -1,97 +1,126 @@
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Poppins:wght@400;600&display=swap');
 
-body {
-    background: #f7f9fc;
-    font-family: "Outfit", sans-serif;
-    padding-top: 30px;
-    text-align: center;
-}
 
 h1 {
-    color: #0d47a1;
-    font-size: 3rem;
+    font-family: "Outfit", sans-serif;
+    font-size: 3.2rem;
     font-weight: 600;
-    margin-bottom: 10px;
+    text-align: center;
+    margin-top: 40px !important;  
+    margin-bottom: 25px;
+    color: #1c2b4a;
 }
 
 h2 {
-    color: #1f2b3e;
+    font-family: "Outfit", sans-serif;
     font-size: 1.6rem;
-    margin-bottom: 35px;
-    letter-spacing: 0.5px;
+    font-weight: 400;
+    text-align: center;
+    color: #31456a;
+    margin-bottom: 55px;
 }
 
-a {
-    display: inline-block;
-    margin: 12px;
-    font-size: 18px;
-    text-decoration: none;
-    padding: 12px 28px;
-    color: white;
-    background: #1565c0;
-    border-radius: 30px;
+
+#barra_comandos form input[type="submit"] {
     font-family: "Poppins", sans-serif;
-    transition: 0.25s ease;
+    font-size: 1.1rem;
+    padding: 14px 30px;
+    border-radius: 28px;
+    background: #0d47a1;
+    border: none;
+    color: white;
+    font-weight: 600;
+    transition: .25s ease;
 }
 
-a:hover {
-    background: #1e88e5;
+#barra_comandos form input[type="submit"]:hover {
+    background: #1565c0;
     transform: translateY(-3px);
-    box-shadow: 0 8px 18px rgba(0,0,0,0.15);
+    box-shadow: 0 6px 14px rgba(0,0,0,0.20);
 }
 
-.carousel {
-    max-width: 900px;
-    margin: 50px auto;
-    border-radius: 18px;
-    overflow: hidden;
-    box-shadow: 0 8px 22px rgba(0, 0, 0, 0.15);
+
+body {
+    font-family: "Outfit", sans-serif;
 }
 
-.carousel-item img {
-    height: 520px;
-    object-fit: cover;
+.navbar {
+    background: linear-gradient(90deg, #0d47a1, #1565c0);
+    box-shadow: 0 2px 10px rgba(0,0,0,0.15);
 }
 
-.carousel-caption {
-    background: rgba(0,0,0,0.35);
-    padding: 15px;
-    border-radius: 10px;
-    backdrop-filter: blur(4px);
+.navbar-brand {
+    font-family: "Poppins", sans-serif;
+    font-weight: 700;
 }
 
-#div_busca {
-    position: fixed;
-    top: 20px;
-    right: 20px;
+.navbar-nav .nav-link {
+    font-size: 1rem;
+    color: #e3e9ff !important;
+    margin-left: 18px;
+}
+
+.navbar-nav .nav-link:hover {
+    color: #fff !important;
+    text-shadow: 0 0 8px rgba(255,255,255,0.8);
+}
+
+#barra_comandos {
     display: flex;
-    align-items: center;
-    gap: 10px;
-    width: 300px;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin-bottom: 50px;
 }
 
-#txt_busca {
-    flex: 1;
-    padding: 12px 14px;
-    font-size: 16px;
+#barra_comandos form input[type="submit"] {
+    background: #0d47a1;
+    border: none;
+    padding: 12px 26px;
     border-radius: 25px;
-    border: 1px solid #c5c5c5;
-    background: white;
-    transition: .2s ease;
+    font-size: 1rem;
+    color: white;
+    font-weight: 600;
+    transition: .25s;
 }
 
-#txt_busca:focus {
-    border-color: #0d47a1;
-    box-shadow: 0 0 8px rgba(13,71,161,0.2);
+#barra_comandos form input[type="submit"]:hover {
+    background: #1565c0;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.20);
 }
 
-#btn_Busca {
-    width: 38px;
-    height: 38px;
-    cursor: pointer;
-    transition: 0.2s;
+
+.carrossel {
+    width: 100%;
+    overflow: hidden;
+    margin-top: 40px;
 }
 
-#btn_Busca:hover {
-    transform: scale(1.1);
+.slides {
+    display: flex;
+    gap: 30px;
+    animation: deslizar 40s linear infinite;
+}
+
+.slide-item {
+    text-align: center;
+}
+
+.slide-item img {
+    height: 260px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+}
+
+.slide-item p {
+    margin-top: 8px;
+    font-weight: 600;
+    color: #1d2d50;
+    font-family: "Poppins", sans-serif;
+}
+
+@keyframes deslizar {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
 }

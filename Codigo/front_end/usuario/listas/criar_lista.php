@@ -108,8 +108,6 @@ $selecionadosFilmes = $_POST['filmes'] ?? [];
         <a href="listas.php" style="margin-left:10px;">Cancelar</a>
 
     </form>
-
-    <!-- DEBUG: verifique o que chega no POST quando clicar em Salvar -->
     <?php if ($_SERVER['REQUEST_METHOD'] === 'POST'): ?>
         <h4>DEBUG POST</h4>
         <pre><?php var_dump($_POST); ?></pre>

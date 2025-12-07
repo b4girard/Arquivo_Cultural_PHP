@@ -8,78 +8,65 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>Home - Administrador</title>
-    <link rel="stylesheet" href="../css/entrada_ADM.css">
-       
+    <link rel="stylesheet" href="../../css/entrada_ADM.css">
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
 </head>
 
 <body>
-    <h1>Bem-vindo!</h1>
-    <h2>Area Admiistrador</h2>
-    <a href="cadastro/livro_cadastro.php">Cadastrar Livros</a><br><br>
-    <a href="cadastro/filme_cadastro.php">Cadastrar Filmes</a><br><br>
-    <a href="../../back_end/perfil/logout.php">Sair</a>
+    <nav class="navbar navbar-expand-lg navbar-dark px-4 py-3">
+        <a class="navbar-brand" href="#" style="font-size:22px; font-weight:bold;">Arquivo Cultural</a>
 
-    <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
-
-        <div class="carousel-indicators">
-            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0"
-                class="active"></button>
-            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1"></button>
-            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2"></button>
-        </div>
-
-
-        <div class="carousel-inner">
-            <div class="carousel-item active">
-                <img src="../Imagens Livros/Os Sete Maridos de Evelyn Hugo.jpg" class="d-block w-100"
-                    alt="Os Sete Maridos de Evelyn Hugo">
-                <div class="carousel-caption d-none d-md-block">
-                    <h5>Os Sete Maridos de Evelyn Hugo</h5>
-                    <p>Um romance envolvente sobre fama, amor e segredos.</p>
-                </div>
-            </div>
-
-            <div class="carousel-item">
-                <img src="../Imagens Livros/Jantar Secreto.jpg" class="d-block w-100" alt="Jantar Secreto">
-                <div class="carousel-caption d-none d-md-block">
-                    <h5>Jantar Secreto</h5>
-                    <p>Um suspense contemporâneo brasileiro de tirar o fôlego.</p>
-                </div>
-            </div>
-
-            <div class="carousel-item">
-                <img src="../Imagens Livros/OutroLivro.jpg" class="d-block w-100" alt="Outro Livro">
-                <div class="carousel-caption d-none d-md-block">
-                    <h5>Outro Livro</h5>
-                    <p>Mais uma leitura imperdível para sua lista!</p>
-                </div>
-            </div>
-        </div>
-
-
-        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
-            data-bs-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Anterior</span>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menuNav">
+            <span class="navbar-toggler-icon"></span>
         </button>
+        <div class="collapse navbar-collapse" id="menuNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item"><a class="nav-link" href="cadastro/livro_cadastro.php">Cadastro de Livros</a></li>
+                <li class="nav-item"><a class="nav-link" href="cadastro/filme_cadastro.php">Cadastro de Filmes</a></li>
+                <li class="nav-item"><a class="nav-link btn btn-danger text-white ms-2" href="../../back_end/perfil/logout.php">Sair</a></li>
+            </ul>
+        </div>
+    </nav>
 
-        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators"
-            data-bs-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Próximo</span>
-        </button>
+
+    <h1>Bem-Vindo!</h1>
+    <h2>Aqui você registra livros e filmes que quer ver ou já viu, tudo num só lugar.</h2>
+
+
+    <div id="barra_comandos">
+        <form action="cadastro/livro_cadastro.php"><input type="submit" value="Cadastro de Livros"></form>
+        <form action="cadastro/filme_cadastro.php"><input type="submit" value="Cadastro de Filmes"></form>
     </div>
 
 
-    <div id="div_busca">
-        <input type="text" id="txt_busca" placeholder="Buscar..." />
-        <img src="../Imagens_HTML/Lupa.png" id="btn_Busca" alt="Buscar" />
+    <div class="carrossel">
+        <div class="slides">
+
+            <?php
+            $capas = [
+                ["https://m.media-amazon.com/images/I/71AeB1+8dZL._AC_UF1000,1000_QL80_.jpg", "Jantar Secreto"],
+                ["https://m.media-amazon.com/images/I/91aRbGB8IFL._UF1000,1000_QL80_.jpg", "Os Sete Maridos de Evelyn Hugo"],
+                ["https://m.media-amazon.com/images/I/91r5G8RxqfL.jpg", "É Assim Que Acaba"],
+                ["https://m.media-amazon.com/images/I/91u0wHU3hZL._AC_UF1000,1000_QL80_.jpg", "Castella"],
+                ["https://m.media-amazon.com/images/I/91RtcWPC1OL._UF1000,1000_QL80_.jpg", "Amêndoas"],
+            ];
+
+            for ($i = 0; $i < 2; $i++) {
+                foreach ($capas as $c) {
+                    echo '
+                    <div class="slide-item">
+                        <img src="' . $c[0] . '">
+                        <p>' . $c[1] . '</p>
+                    </div>';
+                }
+            }
+            ?>
+
+        </div>
     </div>
 
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>

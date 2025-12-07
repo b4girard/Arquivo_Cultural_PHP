@@ -3,7 +3,7 @@ session_start();
 include "conexao.php";
 
 if (!isset($_SESSION['ID_usuario'])) {
-    header("Location: login.php");
+    header("Location: ../../front_end/login.php");
     exit;
 }
 

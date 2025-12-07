@@ -1,3 +1,7 @@
+<?php
+require_once "../../../back_end/controle/iniciar_sessao.php";
+include "../../../back_end/controle/conexao.php";
+?>
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
